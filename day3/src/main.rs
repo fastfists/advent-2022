@@ -6,10 +6,16 @@ fn main() {
     let lines = include_str!("input")
         .lines()
         .map(|line |  {
-            let mut chars = line.chars().collect::<Vec<_>>();
-            chars.chunks(2).collect::<Vec<_>>();
-        });
+            let (left, right) = line.split_at(line.len()/2);
+            let left_set: HashSet<char> = left.chars().collect();
+            let right_set: HashSet<char> = right.chars().collect();
 
-    lines.for_each (|  line | println!("{line:?}"));
-    // println!("{lines:?}");
+            (left_set, right_set)
+        })
+        .map(|(a,  b)| {
+            a.intersection(&b).collect::<Vec<_>>()
+        })
+        .collect::<Vec<_>>();
+
+    println!("{lines:?}");
 }
